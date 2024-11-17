@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Notify, { showToast } from "@/components/notify";
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -31,9 +31,11 @@ const LoginForm = () => {
       } else {
         showToast(response.data.message || "Login failed", "error");
       }
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || "Network error occurred";
-      showToast(errorMessage, "error");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        const errorMessage = error.response?.data?.message || "Network error occurred";
+        showToast(errorMessage, "error");
+      }
     } finally {
       setIsLoading(false)
     }

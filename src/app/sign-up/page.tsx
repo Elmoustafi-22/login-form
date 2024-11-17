@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Notify, { showToast } from "@/components/notify";
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Spinner from "@/components/Spinner";
 import PasswordCheckList from "react-password-checklist"
 
@@ -52,9 +52,12 @@ const SignUp = () => {
       } else {
         showToast(response.data.message || "Error occurred", "error");
       }
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || "Network error occurred";
-      showToast(errorMessage, "error")
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        const errorMessage = error.response?.data?.message || "Network error occurred";
+        showToast(errorMessage, "error")
+      }
+      
     } finally {
       setIsLoading(false)
     }

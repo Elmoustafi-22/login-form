@@ -16,7 +16,10 @@ export async function POST(req: Request) {
   try {
     await user.save();
     return NextResponse.json({ message: "User created successfully!" }, { status: 201 });
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 400 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    }
+    return NextResponse.json({ message: "An unexpected error occurrred" }, { status: 500 });
   }
 }
