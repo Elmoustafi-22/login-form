@@ -16,14 +16,14 @@ const LoginForm = () => {
               name="" 
               placeholder="Username" 
               className="py-2 px-3 w-full text-lg text-black 
-              font-light"
+              font-light rounded-sm transition hover:outline-blue-200"
             />
             <input 
               type="password" 
               name="" 
               placeholder="Password" 
               className="py-2 px-3 w-full text-lg text-black 
-              font-light outline-none mt-3"
+              font-light outline-none mt-3 rounded-sm transition hover:outline-blue-200"
             />
             <div className="flex items-center justify-between mt-5">
               <Link href="/sign-up" className="text-white cursor-pointer transition hover:text-black">Not Yet Registered?</Link>
